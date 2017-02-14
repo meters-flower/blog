@@ -1,8 +1,31 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    width: 970px;
+    margin: 50px auto;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+.fl {
+    float: left;
+}
+header {
+    height: 48px;
+    text-align: center;
+}
+ul {
+    list-style: none;
+}
+.aside {
+    width: 200px;
+    margin: 0 10px;
+    text-transform: uppercase;
+}
+.aside a {
+    display: block;
+    font-size: 14px;
+    line-height: 30px;
+    text-align: center;
+    text-decoration: none;
+}
+.aside a:hover {
+    background-color: #eee;
 }

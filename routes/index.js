@@ -6,11 +6,21 @@ var User = require('../models/user.js');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: '主页' });
+    res.render('index', { 
+        title: '主页',
+        user: req.session.user,
+        success: req.flash('success'.toString()),
+        error: req.flash('error'.toString())
+    });
 });
 
 router.get('/reg', function(req, res) {
-  res.render('reg', { title: '注册' });
+    res.render('reg', { 
+        title: '注册',
+        user: req.session.user,
+        success: req.flash('success'.toString()),
+        error: req.flash('error'.toString())
+    });
 });
 
 router.post('/reg', function(req, res) {
@@ -49,10 +59,34 @@ router.post('/reg', function(req, res) {
 });
 
 router.get('/login', function(req, res) {
-  res.render('login', { title: '登录' });
+    res.render('login', { 
+        title: '登录',
+        user: req.session.user,
+        success: req.flash('success'.toString()),
+        error: req.flash('error'.toString())
+    });
 });
 
 router.post('/login', function(req, res) {
+    //生成密码的md5值
+    var md5 = crypto.createHash('md5'),
+        password = md5.update(req.body.password).digest('hex');
+    //检查用户是否存在
+    User.get(req.body.username, function(err, user) {
+        if(!user) {
+            req.flash('error', '用户不存在！');
+            return res.redirect('/login');
+        }
+        //检查密码是否一致
+        if(user.password != password) {
+            req.flash('error', '密码错误！');
+            return res.redirect('/login');
+        }
+        //用户名密码都匹配后，将用户信息存入session
+        req.session.user = user; 
+        req.flash('success', '登录成功！');
+        res.redirect('/'); 
+    });
 });
 
 router.get('/post', function(req, res) {
@@ -63,6 +97,9 @@ router.get('/post', function(req, res) {
 });
 
 router.get('/logout', function(req, res) {
+    req.session.user = null;
+    req.flash('success', '登出成功');
+    res.redirect('/');
 });
 
 module.exports = router;

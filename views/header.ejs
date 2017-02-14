@@ -9,11 +9,23 @@
     <header>
         <h1><%= title %></h1>        
     </header>
-    <nav>
+    <nav class="fl aside">
         <ul>
             <li><a title="主页" href="/">home</a></li>
-            <li><a title="登录" href="/login">login</a></li>
-            <li><a title="注册" href="/reg">register</a></li>
+            <% if(user) { %>
+                <li><a title="发表" href="/post">post</a></li>
+                <li><a title="登出" href="/logout">logout</a></li>
+            <% }else { %>
+                <li><a title="登录" href="/login">login</a></li>
+                <li><a title="注册" href="/reg">register</a></li>
+            <% } %>
         </ul>
     </nav>
-    <article>
+    <article class="fl">
+        <% if(success) { %>
+            <div><%= success %></div> 
+        <% } %>
+        <% if(error) { %>
+            <div><%= error %></div> 
+        <% } %>
+
