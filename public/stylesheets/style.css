@@ -29,3 +29,7 @@ ul {
 .aside a:hover {
     background-color: #eee;
 }
+.post-content {
+    width: 420px;
+    height: 120px;
+}

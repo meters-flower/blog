@@ -1,3 +1,10 @@
 <%- include header %>
-    这是主页
+    <% posts.forEach(function(post, index) { %>
+        <p><h2><%= post.title %></h2></p>
+        <p> 
+            <span>作者：<%= post.name %></span>
+            <span>日期：<%= post.time.day %></span>
+        </p>
+        <p><%- post.post %></p>
+    <% }) %>
 <%- include footer %>
