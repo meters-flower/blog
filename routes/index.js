@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var crypto = require('crypto');  //用来生成散列值来加密密码
+var fs = require('fs');
+var multiparty = require('multiparty'); //文件上传
 
 var User = require('../models/user.js');
 var Post = require('../models/post.js');
@@ -149,6 +151,39 @@ router.get('/logout', function(req, res) {
     req.session.user = null;
     req.flash('success', '登出成功');
     res.redirect('/');
+});
+
+router.get('/upload',checkLogin);
+router.get('/upload', function(req, res) {
+    res.render('upload', { 
+        title: '文件上传',
+        user: req.session.user,
+        success: req.flash('success'.toString()),
+        error: req.flash('error'.toString())
+    });
+});
+
+router.post('/upload',checkLogin);
+router.post('/upload', function(req, res) {
+    //设置临时上传目标路径
+    var form = new multiparty.Form({uploadDir: './public/images/'});
+    form.parse(req, function(error, fields, files) {
+        for(var i in files) {
+            var file = files[i]
+            if(file[0].size == 0) {
+                //使用同步方式删除一个空文件
+                fs.unlinkSync(file[0].path);
+                console.log('Successfully removed a empty file!');
+            }else {
+                var target_path = './public/images/'+file[0].originalFilename;
+                //使用同步方式重命名一个文件
+                fs.renameSync(file[0].path, target_path);
+                console.log('Successfully renamed a file!');
+            }
+        }
+        req.flash('success', '文件上传成功！');
+        res.redirect('/upload');         
+    });
 });
 
 module.exports = router;

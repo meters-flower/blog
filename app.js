@@ -1,9 +1,11 @@
 var express = require('express');
 var path = require('path');
+
 var session = require('express-session');
 var MongoStore  = require('connect-mongo')(session);
 var settings = require('./setting');
 var flash = require('connect-flash');
+
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
