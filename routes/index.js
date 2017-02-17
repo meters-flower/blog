@@ -6,6 +6,7 @@ var multiparty = require('multiparty'); //文件上传
 
 var User = require('../models/user.js');
 var Post = require('../models/post.js');
+var Comment = require('../models/comment.js');
 
 /*页面权限控制
  *即注册和登录页面应该阻止已登录的用户访问，登出后的发表页只对已登录的用户开发
@@ -75,6 +76,7 @@ router.post('/reg', function(req, res) {
             req.flash('error', '用户已存在！');
             return res.redirect('/reg');
         }
+            
         //如果用户不存在则新增用户
         newUser.save(function(err, user) {
             if(err) {
@@ -135,15 +137,20 @@ router.post('/post',checkLogin);
 router.post('/post', function(req, res) {
     var currentUser = req.session.user,
         post = new Post(currentUser.name, req.body.title, req.body.content);
-    post.save(function(err) {
-        if(err) {
-            req.flash('error', err);
-            return res.redirect('/');
-        }
-        req.flash('success', '发布成功！');
-        res.redirect('/'); 
-    });
-
+        console.log(currentUser['ops'][0].name);
+    if(req.body.title) {
+        post.save(function(err) {
+            if(err) {
+                req.flash('error', err);
+                return res.redirect('/');
+            }
+            req.flash('success', '发布成功！');
+            res.redirect('/'); 
+        });         
+    }else {
+        req.flash('error', '文章标题不能为空');
+        return res.redirect('back');       
+    }
 });
 
 router.get('/logout',checkLogin);
@@ -224,6 +231,28 @@ router.get('/u/:name/:day/:title', function(req, res) {
             success: req.flash('success'.toString()),
             error: req.flash('error'.toString())
         });
+    });  
+});
+
+router.post('/u/:name/:day/:title', function(req, res) {
+    var date = new Date(),
+        time = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()),
+        comment = {
+            name: req.body.name,
+            email: req.body.email,
+            website: req.body.website,
+            time: time,
+            content: req.body.content
+        },
+        newComment = new Comment(req.params.name, req.params.day, req.params.title, comment);
+    //发布留言
+    newComment.save(function(err) {
+        if(err) {
+            req.flash('error', err);
+            return res.redirect('back');
+        }
+        req.flash('success', '留言成功!');
+        res.redirect('back');
     });  
 });
 
