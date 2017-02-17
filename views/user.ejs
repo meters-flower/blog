@@ -4,9 +4,10 @@
             <h2><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></h2>
         </p>
         <p> 
-            作者：<a href="/u/<%= post.name %>"><%= post.name %></a>　|　
-            日期：<%= post.time.minute %>
+            <span>作者：<%= post.name %></span>
+            <span>日期：<%= post.time.minute %></span>
         </p>
         <p><%- post.post %></p>
     <% }) %>
+    <a class="back-btn" href="/">返回</a>
 <%- include footer %>

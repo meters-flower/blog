@@ -3,17 +3,38 @@ body {
     margin: 50px auto;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-
-.fl {
-    float: left;
-}
 header {
     height: 48px;
     text-align: center;
 }
+.fl {
+    float: left;
+}
+.op-btn, .back-btn {
+    margin: 3px;
+    padding: 4px 6px;
+    border-radius: 3px;
+
+    font-size: 13px;
+    color: #333;
+    background-color: #f3f3f3;
+
+    -webkit-transition: color .2s linear;
+}
+.op-btn:hover {
+    color: #fff;
+    background-color: #abcdef;
+}
+.back-btn:hover {
+    background-color: #ccc;
+}
 ul {
     list-style: none;
 }
+a {
+    text-decoration: none;
+}
+/* 侧边栏 */
 .aside {
     width: 200px;
     margin: 0 10px;
@@ -29,6 +50,7 @@ ul {
 .aside a:hover {
     background-color: #eee;
 }
+
 .post-content {
     width: 420px;
     height: 120px;
