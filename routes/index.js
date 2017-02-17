@@ -137,7 +137,6 @@ router.post('/post',checkLogin);
 router.post('/post', function(req, res) {
     var currentUser = req.session.user,
         post = new Post(currentUser.name, req.body.title, req.body.content);
-        console.log(currentUser['ops'][0].name);
     if(req.body.title) {
         post.save(function(err) {
             if(err) {
