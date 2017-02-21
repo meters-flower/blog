@@ -10,6 +10,9 @@ header {
 .fl {
     float: left;
 }
+.fr {
+    float: right;
+}
 .op-btn, .back-btn {
     margin: 3px;
     padding: 4px 6px;

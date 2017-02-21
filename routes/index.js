@@ -192,6 +192,23 @@ router.post('/upload', function(req, res) {
     });
 });
 
+router.get('/search', function(req, res) {
+    //查询并返回该用户的所有文章
+    Post.search(req.query.keyword, function(err, posts) {
+        if(err) {
+            req.flash('error', err);
+            return res.redirect('/');
+        }
+        res.render('search', { 
+            title: "SEARCH:" + req.query.keyword,
+            posts: posts,
+            user: req.session.user,
+            success: req.flash('success'.toString()),
+            error: req.flash('error'.toString())
+        });
+    });
+});
+
 router.get('/u/:name', function(req, res) {
     //检查用户是否存在
     User.get(req.params.name, function(err, user) {

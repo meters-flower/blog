@@ -7,7 +7,11 @@
   </head>
   <body>
     <header>
-        <h1><%= title %></h1>        
+        <h1><%= title %></h1>  
+        <form action="/search" method="GET">
+            <input class="fr" type="submit" value="搜索">
+            <input class="fr" type="text" name="keyword" placeholder="请输入关键字">
+        </form>
     </header>
     <nav class="fl aside">
         <ul>

@@ -3,7 +3,7 @@
         <a href="<%= comment.website %>"><%= comment.name %></a>
         <span>回复于 <%= comment.time %></span>
     </p>
-    <p><%- comment.comment %></p>
+    <p><%- comment.content %></p>
 <% }) %>
 <form method="post">
     <% if(user) { %>
