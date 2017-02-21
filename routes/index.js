@@ -27,6 +27,10 @@ function checkNotLogin(req, res, next ) {
 }
 
 /* 路由控制 */
+router.use(function(req, res) {
+    res.render('404');
+});
+
 router.get('/', function(req, res) {
     Post.getAll(null, function(err, posts) {
         if(err) {
