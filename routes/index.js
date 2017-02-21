@@ -27,10 +27,6 @@ function checkNotLogin(req, res, next ) {
 }
 
 /* 路由控制 */
-router.use(function(req, res) {
-    res.render('404');
-});
-
 router.get('/', function(req, res) {
     Post.getAll(null, function(err, posts) {
         if(err) {
@@ -322,5 +318,9 @@ router.get('/remove/:name/:day/:title', function(req, res) {
         req.flash('success', '删除成功!');
         res.redirect('/'); 
     });  
+});
+
+router.use(function(req, res) {
+    res.render('404');
 });
 module.exports = router;
